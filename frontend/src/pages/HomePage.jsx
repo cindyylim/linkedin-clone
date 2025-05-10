@@ -1,10 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "../lib/axios";
+import { useAuth } from "../hooks/useAuth";
 import Sidebar from "../components/Sidebar";
 
-
 const HomePage = () => {
-  const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+  const { data: authUser } = useAuth();
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="hidden lg:block lg:col-span-1">

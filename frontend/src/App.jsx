@@ -3,26 +3,13 @@ import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
-import toast, { Toaster } from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "./lib/axios";
+import { Toaster } from "react-hot-toast";
 import { Navigate } from "react-router-dom";
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
-  const { data: authUser, isLoading } = useQuery({
-    queryKey: ["authUser"],
-    queryFn: async () => {
-      try {
-        const res = await axiosInstance.get("/auth/me");
-        return res.data;
-      } catch (err) {
-        if (err.response && err.response.status === 401) {
-          return null;
-        }
-        toast.error(err.response.data.message || "Something went wrong");
-      }
-    },
-  });
+  const { data: authUser, isLoading } = useAuth();
+  
   if (isLoading) return null;
   return (
     <Layout>
