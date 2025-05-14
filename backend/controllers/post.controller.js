@@ -4,7 +4,7 @@ import Post from "../models/post.model.js";
 
 export const getFeedPosts = async (req, res) => {
   try {
-    const posts = await Post.find({ author: { $in: req.user.connections } })
+    const posts = await Post.find({ author: { $in: [...req.user.connections, req.user._id] } })
       .populate("author", "name username profilePicture headline")
       .populate("comments.user", "name profilePicture")
       .sort({ createdAt: -1 });
@@ -30,7 +30,7 @@ export const createPost = async (req, res) => {
       });
     } else {
       newPost = new Post({
-        author: req.uesr._id,
+        author: req.user._id,
         content,
       });
     }

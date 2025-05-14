@@ -16,7 +16,7 @@ export const sendConnectionRequest = async (req, res) => {
   try {
     const existingRequest = await ConnectionRequest.findOne({
       sender: senderId,
-      receiver: userId,
+      recipient: userId,
       status: "pending",
     });
     if (existingRequest) {
@@ -26,7 +26,7 @@ export const sendConnectionRequest = async (req, res) => {
     }
     const newRequest = new ConnectionRequest({
       sender: senderId,
-      receiver: userId,
+      recipient: userId,
       status: "pending",
     });
     await newRequest.save();
@@ -166,8 +166,8 @@ export const getConnectionStatus = async (req, res) => {
     try {
         const pendingRequest = await ConnectionRequest.findOne({
             $or: [
-                {sender: userId, receiver: id},
-                {sender: id, receiver: userId},
+                {sender: userId, recipient: id},
+                {sender: id, recipient: userId},
             ],
             status: "pending",
         });
