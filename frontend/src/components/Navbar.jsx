@@ -11,7 +11,7 @@ const Navbar = () => {
 
   const { data: notifications, isLoading: isNotificationsLoading } = useQuery({
     queryKey: ["notifications"],
-    queryFn: async () => axiosInstance.get("/notifications"),
+    queryFn: () => axiosInstance.get("/notifications"),
     enabled: !!authUser,
     staleTime: 30000, // Consider data fresh for 30 seconds
     cacheTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
@@ -19,7 +19,7 @@ const Navbar = () => {
 
   const { data: connectionRequests, isLoading: isConnectionsLoading } = useQuery({
     queryKey: ["connectionRequests"],
-    queryFn: async () => axiosInstance.get("/connections/requests"),
+    queryFn: () => axiosInstance.get("/connections/requests"),
     enabled: !!authUser,
     staleTime: 30000,
     cacheTime: 5 * 60 * 1000,
