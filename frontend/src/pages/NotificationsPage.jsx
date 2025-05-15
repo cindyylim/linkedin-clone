@@ -6,6 +6,7 @@ import {
   ThumbsUp,
   Trash2,
   Eye,
+  UserPlus
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";

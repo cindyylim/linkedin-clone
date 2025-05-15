@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import NotificationsPage from "./pages/NotificationsPage";
+import NetworkPage from "./pages/NetworkPage";
 
 function App() {
   const { data: authUser, isLoading } = useAuth();
@@ -30,6 +31,10 @@ function App() {
         <Route
           path="/notifications"
           element={authUser ? <NotificationsPage/> :  <Navigate to="/login" />}
+        />
+        <Route
+          path="/network"
+          element={authUser ? <NetworkPage/> :  <Navigate to="/login" />}
         />
       </Routes>
       <Toaster />
