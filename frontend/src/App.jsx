@@ -8,6 +8,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import NotificationsPage from "./pages/NotificationsPage";
 import NetworkPage from "./pages/NetworkPage";
+import PostPage from "./pages/PostPage";
 
 function App() {
   const { data: authUser, isLoading } = useAuth();
@@ -35,6 +36,10 @@ function App() {
         <Route
           path="/network"
           element={authUser ? <NetworkPage/> :  <Navigate to="/login" />}
+        />
+        <Route
+          path="/posts/:postId"
+          element={authUser ? <PostPage/> :  <Navigate to="/login" />}
         />
       </Routes>
       <Toaster />
