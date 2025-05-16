@@ -235,6 +235,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
               <span className="text-gray-600">{userData.location}</span>
             )}
           </div>
+          <p className="text-gray-600">{userData.connections.length} connections</p>
         </div>
         {isOwnProfile ? (
           isEditing ? (
