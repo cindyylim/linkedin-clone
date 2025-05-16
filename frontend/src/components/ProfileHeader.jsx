@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../hooks/useAuth";
-import { Camera, MapPin, UserCheck, UserPlus, X } from "lucide-react";
-import {useState} from "react";
+import { Camera, MapPin, UserCheck, UserPlus, X, Clock } from "lucide-react";
+import { useState } from "react";
+import { axiosInstance } from "../lib/axios";
+import toast from "react-hot-toast";
 
 const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -15,18 +17,33 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
       enabled: !isOwnProfile,
     }
   );
+
   const { mutate: sendConnectionRequest } = useMutation({
     mutationFn: (userId) =>
       axiosInstance.post(`/connections/request/${userId}`),
     onSuccess: () => {
       toast.success("Connection request sent");
       refetchConnectionStatus();
-      queryClient.invalidateQueries(["connnectionRequests"]);
+      queryClient.invalidateQueries(["connectionRequests"]);
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "An error occurred");
     },
   });
+
+  const { mutate: acceptConnectionRequest } = useMutation({
+    mutationFn: (requestId) =>
+      axiosInstance.put(`/connections/accept/${requestId}`),
+    onSuccess: () => {
+      toast.success("Connection request accepted");
+      refetchConnectionStatus();
+      queryClient.invalidateQueries(["connectionRequests"]);
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "An error occurred");
+    },
+  });
+
   const { mutate: rejectRequest } = useMutation({
     mutationFn: (requestId) =>
       axiosInstance.put(`/connections/reject/${requestId}`),
@@ -39,6 +56,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
       toast.error(err.response?.data?.message || "An error occurred");
     },
   });
+
   const { mutate: removeConnection } = useMutation({
     mutationFn: (userId) => axiosInstance.delete(`/connections/${userId}`),
     onSuccess: () => {
@@ -50,11 +68,15 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
       toast.error(err.response?.data?.message || "An error occurred");
     },
   });
+
   const renderConnectionButton = () => {
     const baseClass =
       "text-white py-2 px-4 rounded-full transition duration-300 flex items-center justify-center";
-    switch (connectionStatus) {
-      case "is_connected":
+    
+    if (!connectionStatus?.data) return null;
+
+    switch (connectionStatus.data.status) {
+      case "connected":
         return (
           <div className="flex gap-2 justify-center">
             <div className={`${baseClass} bg-green-500 hover:bg-green-600`}>
@@ -81,9 +103,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
         return (
           <div className="flex gap-2 justify-center">
             <button
-              onClick={() =>
-                acceptConnectionRequest(connectionStatus.data.requstId)
-              }
+              onClick={() => acceptConnectionRequest(connectionStatus.data.requestId)}
               className={`${baseClass} bg-green-500 hover:bg-green-600`}
             >
               Accept
@@ -108,6 +128,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
         );
     }
   };
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -121,10 +142,12 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
       reader.readAsDataURL(file);
     }
   };
+
   const handleSave = () => {
     onSave(editedData);
     setIsEditing(false);
   };
+
   return (
     <div className="bg-white shadow rounded-lg mb-6">
       <div
