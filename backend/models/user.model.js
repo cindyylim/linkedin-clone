@@ -54,8 +54,8 @@ const userSchema = new mongoose.Schema(
       {
         school: String,
         fieldOfStudy: String,
-        startYear: Number,
-        endYear: Number,
+        startDate: Number,
+        endDate: Number,
       },
     ],
     connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],

@@ -1,5 +1,6 @@
 import { School, X } from "lucide-react";
 import { useState } from "react";
+import {formatDate} from "../utils/dateUtils";
 
 const EducationSection = ({ userData, isOwnProfile, onSave }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -7,22 +8,22 @@ const EducationSection = ({ userData, isOwnProfile, onSave }) => {
   const [newEducation, setNewEducation] = useState({
     school: "",
     fieldOfStudy: "",
-    startYear: "",
-    endYear: "",
+    startDate: "",
+    endDate: "",
     currentlyAttending: false,
   });
   const handleAddEducation = () => {
     if (
       newEducation.school &&
       newEducation.fieldOfStudy &&
-      newEducation.startYear
+      newEducation.startDate
     ) {
       setEducations([...educations, newEducation]);
       setNewEducation({
         school: "",
         fieldOfStudy: "",
-        startYear: "",
-        endYear: "",
+        startDate: "",
+        endDate: "",
         currentlyAttending: false,
       });
     }
@@ -52,7 +53,7 @@ const EducationSection = ({ userData, isOwnProfile, onSave }) => {
               <h3 className="font-semibold">{edu.fieldOfStudy}</h3>
               <p className="text-gray-600">{edu.school}</p>
               <p className="text-gray-500 text-sm">
-                {edu.startYear} - {edu.endYear || "Present"}
+                {formatDate(edu.startDate)} - {formatDate(edu.endDate) || "Present"}
               </p>
             </div>
           </div>
@@ -94,13 +95,13 @@ const EducationSection = ({ userData, isOwnProfile, onSave }) => {
                   className="w-full p-2 border rounded mb-2"
                 />
                 <input
-                  type="text"
+                  type="date"
                   placeholder="Start Year"
-                  value={newEducation.startYear}
+                  value={newEducation.startDate}
                   onChange={(e) =>
                     setNewEducation({
                       ...newEducation,
-                      startYear: e.target.value,
+                      startDate: e.target.value,
                     })
                   }
                   className="w-full p-2 border rounded mb-2"
@@ -119,13 +120,13 @@ const EducationSection = ({ userData, isOwnProfile, onSave }) => {
                 </div>
                 {!newEducation.currentlyAttending && (
                   <input
-                    type="text"
+                    type="date"
                     placeholder="End Year"
-                    value={newEducation.endYear}
+                    value={newEducation.endDate}
                     onChange={(e) =>
                       setNewEducation({
                         ...newEducation,
-                        endYear: e.target.value,
+                        endDate: e.target.value,
                       })
                     }
                     className="w-full p-2 border rounded mb-2"
