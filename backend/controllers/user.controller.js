@@ -40,12 +40,7 @@ export const updateProfile = async (req, res) => {
     const allowedFields = [
         "name", "headline", "username", "about", "location", "profilePicture", "bannerImg", "skills", "experience", "education"
     ]
-    const updatedData = {};
-    for(const field of allowedFields){
-        if (req.body[field]){
-            updatedData[field] = req.body[field];
-        }
-    }
+    const updatedData = req.body;
     if (req.body.profilePicture){
       const result = await cloudinary.uploader.upload(req.body.profilePicture)
       updatedData.profilePicture = result.secure_url;
@@ -54,7 +49,11 @@ export const updateProfile = async (req, res) => {
       const result = await cloudinary.uploader.upload(req.body.bannerImg)
       updatedData.bannerImg = result.secure_url;
     }
-    const user = await User.findById(req.user._id, {$set: updatedData}, {new: true}).select("-password");
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      updatedData,
+      { new: true }
+    ).select("-password");
     res.json(user);
   } catch (error) {
     console.error("Error in updateProfile: ", error.message);

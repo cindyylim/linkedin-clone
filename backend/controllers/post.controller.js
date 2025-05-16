@@ -99,7 +99,7 @@ export const likePost = async (req, res) => {
 export const getPostById = async (req, res) => {
   const id = req.params.id;
   try {
-    const post = Post.findById(id)
+    const post = await Post.findById(id)
       .populate("author", "name username profilePicture headline")
       .populate("comments.user", "name profilePicture username headline");
     res.status(200).json(post);
