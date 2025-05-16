@@ -12,7 +12,7 @@ const FriendRequest = ({request}) => {
             queryClient.invalidateQueries({queryKey: ["connectionRequests"]})
         },
         onError: (error) => {
-            toast.error(error.response.data.message)
+            toast.error(error.response?.data?.message || "An error occurred");
         }
     })
     const {mutate: rejectConnectionRequest} = useMutation({
@@ -22,7 +22,7 @@ const FriendRequest = ({request}) => {
             queryClient.invalidateQueries({queryKey: ["connectionRequests"]})
         },
         onError: (error) => {
-            toast.error(error.response.data.message)
+            toast.error(error.response?.data?.message || "An error occurred");
         }
     })
     return (

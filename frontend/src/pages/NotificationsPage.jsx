@@ -11,10 +11,11 @@ import {
 import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { formatDistanceToNow } from "date-fns";
+import { useAuth } from "../hooks/useAuth";
 
 const NotificationsPage = () => {
   const queryClient = useQueryClient();
-  const { data: user } = useQuery({ queryKey: ["authUser"] });
+  const { data: user } = useAuth();
   const { data: notifications, isLoading } = useQuery({
     queryKey: ["notifications"],
     queryFn: () => axiosInstance.get("/notifications"),

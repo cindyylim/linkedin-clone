@@ -13,10 +13,11 @@ import {
   Send,
 } from "lucide-react";
 import PostAction from "./PostAction";
+import { useAuth } from "../hooks/useAuth";
 
 const Post = ({ post }) => {
   const {postId} = useParams();
-  const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+  const { data: authUser } = useAuth();
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState(post.comments || []);
@@ -39,7 +40,7 @@ const Post = ({ post }) => {
       toast.success("Post deleted successfully");
     },
     onError: (err) => {
-      toast.error(err.response.data.message || "Failed to delete post");
+      toast.error(err.response?.data?.message || "An error occurred");
     },
   });
   const { mutate: createComment, isPending: isCreatingComment } = useMutation({
@@ -53,7 +54,7 @@ const Post = ({ post }) => {
       toast.success("Successfully created comment");
     },
     onError: (err) => {
-      toast.error(err.response.data.message || "Failed to add comment");
+      toast.error(err.response?.data?.message || "An error occurred");
     },
   });
   const { mutate: likePost, isPending: isLikingPost } = useMutation({

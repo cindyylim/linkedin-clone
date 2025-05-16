@@ -3,9 +3,10 @@ import { UserPlus } from "lucide-react";
 import UserCard from "../components/UserCard";
 import FriendRequest from "../components/FriendRequest";
 import Sidebar from "../components/Sidebar";
+import { useAuth } from "../hooks/useAuth";
 
 const NetworkPage = () => {
-  const { data: user } = useQuery({ queryKey: ["authUser"] });
+  const { data: user } = useAuth();
   const { data: connectionRequests } = useQuery({
     queryKey: ["connectionRequests"],
     queryFn: () => axiosInstance.get("/connections/requests"),

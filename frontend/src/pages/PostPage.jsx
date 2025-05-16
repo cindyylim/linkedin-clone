@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import { axiosInstance } from "../lib/axios";
 import Sidebar from "../components/Sidebar";
 import Post from "../components/Post";
+import { useAuth } from "../hooks/useAuth";
 
 const PostPage = () => {
   const { postId } = useParams();
-  const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+  const { data: authUser } = useAuth();
   const { data: post, isLoading } = useQuery({
     queryKey: ["post", postId],
     queryFn: () => axiosInstance.get(`/posts/${postId}`),

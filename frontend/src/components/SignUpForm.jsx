@@ -21,7 +21,7 @@ const SignUpForm = () => {
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
     },
     onError: (err) => {
-      toast.error(err.response.data.message || "Something went wrong");
+      toast.error(err.response?.data?.message || "An error occurred");
     },
   });
 
@@ -36,7 +36,7 @@ const SignUpForm = () => {
         type="text"
         placeholder="Full name"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => setName(e.target.value.trim())}
         className="input input-bordered w-full"
         required
       />
@@ -44,7 +44,7 @@ const SignUpForm = () => {
         type="text"
         placeholder="Username"
         value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        onChange={(e) => setUsername(e.target.value.trim())}
         className="input input-bordered w-full"
         required
       />
@@ -52,7 +52,7 @@ const SignUpForm = () => {
         type="email"
         placeholder="Email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => setEmail(e.target.value.trim())}
         className="input input-bordered w-full"
         required
       />
@@ -60,7 +60,7 @@ const SignUpForm = () => {
         type="password"
         placeholder="Password (6+ characters)"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => setPassword(e.target.value.trim())}
         className="input input-bordered w-full"
         required
       />

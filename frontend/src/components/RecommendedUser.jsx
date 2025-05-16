@@ -20,7 +20,7 @@ const RecommendedUser = ({ user }) => {
 			queryClient.invalidateQueries({ queryKey: ["connectionStatus", user._id] });
 		},
 		onError: (error) => {
-			toast.error(error.response?.data?.error || "An error occurred");
+            toast.error(error.response?.data?.message || "An error occurred");
 		},
 	});
 
@@ -31,7 +31,7 @@ const RecommendedUser = ({ user }) => {
 			queryClient.invalidateQueries({ queryKey: ["connectionStatus", user._id] });
 		},
 		onError: (error) => {
-			toast.error(error.response?.data?.error || "An error occurred");
+            toast.error(error.response?.data?.message || "An error occurred");
 		},
 	});
 
@@ -42,7 +42,7 @@ const RecommendedUser = ({ user }) => {
 			queryClient.invalidateQueries({ queryKey: ["connectionStatus", user._id] });
 		},
 		onError: (error) => {
-			toast.error(error.response?.data?.error || "An error occurred");
+            toast.error(error.response?.data?.message || "An error occurred");
 		},
 	});
 
