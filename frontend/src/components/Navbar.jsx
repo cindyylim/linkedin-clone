@@ -17,13 +17,14 @@ const Navbar = () => {
     cacheTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
   });
 
-  const { data: connectionRequests, isLoading: isConnectionsLoading } = useQuery({
-    queryKey: ["connectionRequests"],
-    queryFn: () => axiosInstance.get("/connections/requests"),
-    enabled: !!authUser,
-    staleTime: 30000,
-    cacheTime: 5 * 60 * 1000,
-  });
+  const { data: connectionRequests, isLoading: isConnectionsLoading } =
+    useQuery({
+      queryKey: ["connectionRequests"],
+      queryFn: () => axiosInstance.get("/connections/requests"),
+      enabled: !!authUser,
+      staleTime: 30000,
+      cacheTime: 5 * 60 * 1000,
+    });
 
   const { mutate: logout, isLoading: isLoggingOut } = useMutation({
     mutationFn: () => axiosInstance.post("/auth/logout"),
@@ -33,9 +34,8 @@ const Navbar = () => {
     },
   });
 
-  const unreadNotificationsCount = notifications?.data?.filter(
-    (notif) => !notif.read
-  ).length || 0;
+  const unreadNotificationsCount =
+    notifications?.data?.filter((notif) => !notif.read).length || 0;
   const unreadConnectionRequestsCount = connectionRequests?.data?.length || 0;
 
   if (isAuthLoading) {
@@ -80,11 +80,12 @@ const Navbar = () => {
                 >
                   <Users size={20} />
                   <span className="text-xs hidden md:block">Network</span>
-                  {!isConnectionsLoading && unreadConnectionRequestsCount > 0 && (
-                    <span className="absolute -top-1 -right-1 md:right-4 bg-blue-500 text-white text-xs rounded-full size-3 md:size-4 flex items-center justify-center">
-                      {unreadConnectionRequestsCount}
-                    </span>
-                  )}
+                  {!isConnectionsLoading &&
+                    unreadConnectionRequestsCount > 0 && (
+                      <span className="absolute -top-1 -right-1 md:right-4 bg-blue-500 text-white text-xs rounded-full size-3 md:size-4 flex items-center justify-center">
+                        {unreadConnectionRequestsCount}
+                      </span>
+                    )}
                 </Link>
                 <Link
                   to="/notifications"
@@ -121,14 +122,14 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="btn btn-ghost hover:bg-primary/10 transition-colors"
                 >
                   Sign in
                 </Link>
-                <Link 
-                  to="/signup" 
+                <Link
+                  to="/signup"
                   className="btn btn-primary hover:bg-primary/90 transition-colors"
                 >
                   Join now

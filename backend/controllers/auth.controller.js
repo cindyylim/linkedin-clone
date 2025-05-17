@@ -4,7 +4,7 @@ import User from "../models/user.model.js";
 
 export const signup = async (req, res) => {
   const { email, name, username, password } = req.body;
-  if (!name || !email || !username || !password){
+  if (!name || !email || !username || !password) {
     return res.status(400).json("All fields are required");
   }
   try {
@@ -48,40 +48,42 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const {email, password} = req.body;
+  const { email, password } = req.body;
   try {
-    const user = await User.findOne({email});
-    if (!user){
-        return res.status(400).json({message: "Invalid credentials"});
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid credentials" });
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-        return res.status(400).json({message: "Invalid credentials"});
+      return res.status(400).json({ message: "Invalid credentials" });
     }
-    const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {expiresIn: "3d"});
-    await res.cookie("jwt-linkedin", token, {
-        httpOnly: true,
-        maxAge: 3 * 24 * 60 * 60 * 1000,
-        sameSite: 'strict',
-        secure: process.env.NODE_ENV === "production",
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "3d",
     });
-    res.json({message: "Logged in successfully"});
-  }catch (error) {
+    await res.cookie("jwt-linkedin", token, {
+      httpOnly: true,
+      maxAge: 3 * 24 * 60 * 60 * 1000,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    });
+    res.json({ message: "Logged in successfully" });
+  } catch (error) {
     console.error("Error in login controller: ", error.message);
-    return res.status(500).json({message: "Internal server error"});
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const logout = (req, res) => {
   res.clearCookie("jwt-linkedin");
-  res.json({message: "Logged out successfully"});
+  res.json({ message: "Logged out successfully" });
 };
 
 export const getCurrentUser = async (req, res) => {
-    try {
-        res.json(req.user);
-    }catch (error) {
-        console.error("Error in getCurrentUser: ", error.message);
-        res.status(500).json({message: "Internal server error"});
-    }
-}
+  try {
+    res.json(req.user);
+  } catch (error) {
+    console.error("Error in getCurrentUser: ", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

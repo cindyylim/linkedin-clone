@@ -15,7 +15,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
       queryKey: ["connectionStatus", userData._id],
       queryFn: () => axiosInstance.get(`/connections/status/${userData._id}`),
       enabled: !isOwnProfile,
-    }
+    },
   );
 
   const { mutate: sendConnectionRequest } = useMutation({
@@ -72,7 +72,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
   const renderConnectionButton = () => {
     const baseClass =
       "text-white py-2 px-4 rounded-full transition duration-300 flex items-center justify-center";
-    
+
     if (!connectionStatus?.data) return null;
 
     switch (connectionStatus.data.status) {
@@ -103,7 +103,9 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
         return (
           <div className="flex gap-2 justify-center">
             <button
-              onClick={() => acceptConnectionRequest(connectionStatus.data.requestId)}
+              onClick={() =>
+                acceptConnectionRequest(connectionStatus.data.requestId)
+              }
               className={`${baseClass} bg-green-500 hover:bg-green-600`}
             >
               Accept
@@ -235,7 +237,9 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
               <span className="text-gray-600">{userData.location}</span>
             )}
           </div>
-          <p className="text-gray-600">{userData.connections.length} connections</p>
+          <p className="text-gray-600">
+            {userData.connections.length} connections
+          </p>
         </div>
         {isOwnProfile ? (
           isEditing ? (

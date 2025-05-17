@@ -16,7 +16,7 @@ import PostAction from "./PostAction";
 import { useAuth } from "../hooks/useAuth";
 
 const Post = ({ post }) => {
-  const {postId} = useParams();
+  const { postId } = useParams();
   const { data: authUser } = useAuth();
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState("");

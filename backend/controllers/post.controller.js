@@ -4,7 +4,9 @@ import Post from "../models/post.model.js";
 
 export const getFeedPosts = async (req, res) => {
   try {
-    const posts = await Post.find({ author: { $in: [...req.user.connections, req.user._id] } })
+    const posts = await Post.find({
+      author: { $in: [...req.user.connections, req.user._id] },
+    })
       .populate("author", "name username profilePicture headline")
       .populate("comments.user", "name profilePicture")
       .sort({ createdAt: -1 });
@@ -57,7 +59,7 @@ export const deletePost = async (req, res) => {
     }
     if (post.image) {
       await cloudinary.uploader.destroy(
-        post.image.split("/").pop().split(".")[0]
+        post.image.split("/").pop().split(".")[0],
       );
     }
     await Post.findByIdAndDelete(id);
@@ -76,7 +78,7 @@ export const likePost = async (req, res) => {
 
     if (post.likes.includes(userId)) {
       post.likes = post.likes.filter(
-        (id) => id.toString() !== userId.toString()
+        (id) => id.toString() !== userId.toString(),
       );
     } else {
       post.likes.push(userId);
@@ -118,7 +120,7 @@ export const createComment = async (req, res) => {
       {
         $push: { comments: { user: req.user._id, content } },
       },
-      { new: true }
+      { new: true },
     ).populate("author", "name email username headline profilePicture");
     if (post.author.toString() !== req.user._id.toString()) {
       const newNotification = new Notification({

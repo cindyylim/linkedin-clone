@@ -1,6 +1,6 @@
 import { School, X } from "lucide-react";
 import { useState } from "react";
-import {formatDate} from "../utils/dateUtils";
+import { formatDate } from "../utils/dateUtils";
 
 const EducationSection = ({ userData, isOwnProfile, onSave }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -53,7 +53,8 @@ const EducationSection = ({ userData, isOwnProfile, onSave }) => {
               <h3 className="font-semibold">{edu.fieldOfStudy}</h3>
               <p className="text-gray-600">{edu.school}</p>
               <p className="text-gray-500 text-sm">
-                {formatDate(edu.startDate)} - {formatDate(edu.endDate) || "Present"}
+                {formatDate(edu.startDate)} -{" "}
+                {formatDate(edu.endDate) || "Present"}
               </p>
             </div>
           </div>

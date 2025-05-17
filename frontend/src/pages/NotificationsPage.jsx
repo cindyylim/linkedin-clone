@@ -6,7 +6,7 @@ import {
   ThumbsUp,
   Trash2,
   Eye,
-  UserPlus
+  UserPlus,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
@@ -149,7 +149,7 @@ const NotificationsPage = () => {
                         <p className="text-xs text-gray-500 mt-1">
                           {formatDistanceToNow(
                             new Date(notification.createdAt),
-                            { addSuffix: true }
+                            { addSuffix: true },
                           )}
                         </p>
                         {renderRelatedPost(notification.relatedPost)}

@@ -20,10 +20,10 @@ const PostCreation = ({ user }) => {
     onSuccess: () => {
       resetForm();
       toast.success("Post created successfully");
-      queryClient.invalidateQueries({queryKey: ["posts"]});
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
     onError: (err) => {
-        toast.error(err.response?.data?.message || "An error occurred");
+      toast.error(err.response?.data?.message || "An error occurred");
     },
   });
 

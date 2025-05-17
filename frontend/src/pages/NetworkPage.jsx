@@ -12,7 +12,7 @@ const NetworkPage = () => {
     queryFn: () => axiosInstance.get("/connections/requests"),
   });
   console.log(connectionRequests);
-  const {data: connections} = useQuery({
+  const { data: connections } = useQuery({
     queryKey: ["connections"],
     queryFn: () => axiosInstance.get("/connections"),
   });
@@ -30,10 +30,7 @@ const NetworkPage = () => {
               <h2 className="text-xl font-semibold mb-2">Connection Request</h2>
               <div className="space-y-4">
                 {connectionRequests.data.map((request) => (
-                  <FriendRequest
-                    key={request._id}
-                    request={request}
-                  />
+                  <FriendRequest key={request._id} request={request} />
                 ))}
               </div>
             </div>

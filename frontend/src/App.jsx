@@ -13,7 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const { data: authUser, isLoading } = useAuth();
-  
+
   if (isLoading) return null;
   return (
     <Layout>
@@ -32,19 +32,19 @@ function App() {
         />
         <Route
           path="/notifications"
-          element={authUser ? <NotificationsPage/> :  <Navigate to="/login" />}
+          element={authUser ? <NotificationsPage /> : <Navigate to="/login" />}
         />
         <Route
           path="/network"
-          element={authUser ? <NetworkPage/> :  <Navigate to="/login" />}
+          element={authUser ? <NetworkPage /> : <Navigate to="/login" />}
         />
         <Route
           path="/posts/:postId"
-          element={authUser ? <PostPage/> :  <Navigate to="/login" />}
+          element={authUser ? <PostPage /> : <Navigate to="/login" />}
         />
         <Route
           path="/profile/:username"
-          element={authUser ? <ProfilePage/> :  <Navigate to="/login" />}
+          element={authUser ? <ProfilePage /> : <Navigate to="/login" />}
         />
       </Routes>
       <Toaster />

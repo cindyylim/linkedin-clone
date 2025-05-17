@@ -1,0 +1,23 @@
+{
+  "name": "linkedin-clone",
+  "version": "1.0.0",
+  "description": "A full-stack LinkedIn clone built with the MERN stack (MongoDB, Express.js, React, Node.js) and modern web technologies.",
+  "homepage": "https://github.com/cindyylim/linkedin-clone#readme",
+  "bugs": {
+    "url": "https://github.com/cindyylim/linkedin-clone/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cindyylim/linkedin-clone.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
+  }
+}

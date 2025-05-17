@@ -20,4 +20,4 @@ export const useAuth = () => {
     retry: 1, // Only retry once on failure
     refetchOnWindowFocus: false, // Don't refetch when window regains focus
   });
-}; 
+};
